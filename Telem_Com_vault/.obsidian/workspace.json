@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "face5934ba3f9072",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "TTL and RS232.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
+                "file": "TTL and RS232.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
+                "file": "TTL and RS232.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Start Note for knowledge base about funnywing project RF Telemetery Communication.md"
+                "file": "TTL and RS232.md"
               }
             }
           },
@@ -152,9 +165,9 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "5a55d4479deb9a45",
+  "active": "face5934ba3f9072",
   "lastOpenFiles": [
-    "2022-12-18.md",
-    "Start Note for knowledge base about funnywing project RF Telemetery Communication.md"
+    "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
+    "2022-12-18.md"
   ]
 }

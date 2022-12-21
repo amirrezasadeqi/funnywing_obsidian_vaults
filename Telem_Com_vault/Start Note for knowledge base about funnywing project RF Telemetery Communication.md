@@ -8,3 +8,18 @@ Mr.Rezvani said that you must also use the pin 7 of the 9XTend module to enable 
 
 Some Electrical concepts that are good to know:
 - [[TTL and RS232]]: somethings releated to voltage level of logical electronic parts and modules.
+- Working Modes of 9XTend Module:
+	- Transparent Operation: [Some good information in this link](https://www.digi.com/resources/documentation/Digidocs/90001942-13/concepts/c_transparent_mode_detailed.htm?tocpath=XBee%20transparent%20mode%7CXBee%20transparent%20mode%20in%20detail%7C_____0) 
+	-  API Operation: [Some good information in this link](https://www.digi.com/resources/documentation/Digidocs/90001942-13/Default.htm#concepts/c_api_mode_detailed.htm?TocPath=API%2520mode%257C_____1)
+
+Air Module:
+	Firmware version: 206F
+	SH: 3852
+	SL: 19CB
+Ground Module:
+	Firmware version: 206F
+	SH: 5761
+	SL: 12CB
+
+Now let's see how XBee python library can work for us!
+

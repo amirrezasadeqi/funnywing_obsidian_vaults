@@ -16,10 +16,27 @@ Air Module:
 	Firmware version: 206F
 	SH: 3852
 	SL: 19CB
+	module address: module SH (3852)
+ 
+Another profile for air module:
+	Firmware version: 8064
+	SH: 13A200
+	SL: 404A9EAB
+	DH: 13A2FF
+	DL: FFF112CB
+
 Ground Module:
 	Firmware version: 206F
 	SH: 5761
 	SL: 12CB
+	module address: module SH (5761)
+
+Another profile for Ground Module:
+	Firmware version: 8064
+	SH: 13A2FF
+	SL: FFF112CB
+	DH: 13A200
+	DL: 404A9EAB
 
 Now let's see how XBee python library can work for us!
 

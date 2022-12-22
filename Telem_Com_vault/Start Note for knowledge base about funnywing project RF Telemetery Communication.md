@@ -40,3 +40,5 @@ Another profile for Ground Module:
 
 Now let's see how XBee python library can work for us!
 
+I think we can use the rf modules!
+

@@ -5,6 +5,7 @@ I have tried to connect the RF module to raspberry pi directly with the pi pinou
 So as I understood the problem is about the protocol of connection. consequently, I tested this connection with __PL2303__ module which we had bought in our shoppings. but it does not work. I will test this module more in next tries.
 
 Mr.Rezvani said that you must also use the pin 7 of the 9XTend module to enable the module to work. This pin is __shutdown__ pin and during operation must be high. Also, If you have looked at the pinout in datasheet, you would be informed that this pin is a __"must use pin"__ for the module. So read the datasheet with more concentration!
+[XTend moduel documentation](https://www.digi.com/resources/documentation/digidocs/pdfs/90002166.pdf) 
 
 Some Electrical concepts that are good to know:
 - [[TTL and RS232]]: somethings releated to voltage level of logical electronic parts and modules.
@@ -68,6 +69,57 @@ To sum the subject of proper method of connecting GCS and RPI using XTend RF mod
 For now to do the job, I will use XBee python library (if it did not help,  use pySerial instead) for RF module communication and send/recieve data between GCS and RPI board, since I think using this method I could be more to the point, I mean I can get what exactly I want and nothing more or less, and furthermore at the moment I have no more time to test different methods which may not help to do the job, so I will use the more probable suitable method, __XBee python library with sending some predefined string like commands to RPI for doing some tasks like simple goto commands and also receiving sensor datas like funnywing GPS data over RF connection__. In future I will test more methods and ... 
 
 Now, Let's Code using the selected method!
+
+#### List of TODOs for adding support for RF communication
+- For RPI board implement these:
+	- [X] Server
+	- [ ] Subscriber node for sensor data -> this sends data to GCS, like GPS data
+	- [ ] Client node -> this recives commands from GCS, deserializes the commands, calls corresponding services, serializes the answer and sends it back to GCS
+ 
+- For GCS PC we should do these:
+	- [ ] Adding seperate page for RF communication in GUI app.
+	- [X] Add subscription to sensor data and visualize it in GUI app.
+	- [ ] Test the sensor subscription(previous task.)
+	- [ ] Add publisher for sending commands to corresponding topics to the GUI app.
+	- [ ] Add a Publisher node which recieves data from RF link and publishes to corresponding topics to feed the GUI app.
+	- [ ] Add a subscriber node subscribing to the command topics, serializing them and sending them to RPI. This node should also get the command answers back and provide them to GUI app. This last task may also be done in the previous publisher task(data from RF link), but I'm not confident about it yet, but I think here is better for implementing it, because in this way we gather same contexts together!
+
+Now let's implement these tasks!
+
+
+### How the structure of Guidance commands should be?
+In the fourth task for GCS PC, we need to send commands into the RPI via RF link. But how the structure of the sending data should be?
+Is it enough to use something like below for Simple GOTO command(space as delimeter):
+SG lat lon alt
+Or we need something more complex, like using pickle, protobuf and so on. Regardless of selected method, In the RPI side, we need to parse the recieved data to be able to call the corresponding service.
+
+After some little thinking, I infered that using a de/serialization library is a better way, because of below reasons:
+- The library converts the data to an usable format or data structure in your language and so you should just use it. But in the case of implementing the serialization by yourself, you need to provide the de/serialization function of each command type you add to your system. So your life would be easier.
+- Some advantages like encrypting and ...
+Also, at the moment I'm not 100 percent confident about the fact that using de/serialization causes the better performance and creation of extra values, But I've decided to use a library for that.
+Note that the usage of library for de/serialization does not the task of parsing the command and I must do it manaully. The probable solutions could be the handler dictionary, Inheritance of command classes handling the corresponding service call, simple `if else` statements and so on. I will decide for this in future ...
+Now let's choose the de/serialization library and and create the publisher of guidance commands.
+__Note__: a nice note that I've found is the fact that(I think), using de/serialization you can connect different programs with different languages.
+
+### De/Serialization libraries
+[This article](https://medium.com/@shmulikamar/python-serialization-benchmarks-8e5bb700530b) is a good place to be familiar with different de/serialization python libraries and 2 or 3 terminologies in this area. The article also provides a benchmark for performance comparision between the introduced packages. The most appealing libraries for me are elaborated in below list:
+- pickle: [The pickle module is not secure. Only unpickle data you trust.](https://docs.python.org/3/library/pickle.html). This is stated in the documentation. Since we are not very expert to handle this unsecurity, so we don't use it.
+- Google Protobuf package: This is very attractive for me because this library is very common in machine learning and TensorFlow. Also, among introduced libraries, this library's serialization output size is the second least size and this is good feature for us because we need to transfer this output over RF connection. I think the drawback of this library is its speed(which in our case is not a problem, because we don't de/serialize too many messages) which is relativly lower than the other introduced packages. Also, we need to compile `.proto` files into corresponding python codes, which I don't like this fact, since it can make the project structure too complicated and is not necessary in our case. The other drawback of this library is that(I think) it only supports simple data types and in future of our project we may need to send more complex data type over RF port and I don't want to become restricted. Consequently, I don't use this package for this project, but I will study and use it for my next projects, specially ML projects. So in future ...
+- JSON and Ultra-JSON: The json library is in python standard libraries but is comparitativly slow and produces large serialized objects. so Ultra-JSON is its faster alternative. The drawback of UJSON is its less accuracy in floating points and the fact that some options of JSON isn't implemented in it.
+- msgpack: This is one of the fastest de/serialization libraries producing relativly small sized output(based on the represented benchmark, larger than protobuf). There are many different implementation for this library in different languages like python, C++ and so on. It does not need any seperate message description file like protobuf and also handles complex data type serialization like [dataclass](https://realpython.com/python-data-classes/)(also refer to [this link](https://docs.python.org/3/library/dataclasses.html)) in [__aviramha__](https://github.com/aviramha/ormsgpack) implementation. Furthermore, it supports data types like `numpy` and so on. It also very recommended by the author of the medium article.
+There are also some more packages introduced in the article and over the internet, but for now I don't want to spend more time on this. I think the most powerful packages which are worth to learn and use in future(may be more than enough in this project, but why not use a powerful one for future extendability) are, Google Protobuf and msgpack. Because of previously stated reasons, we don't use protobuf here(I will use it later and specially in ML projects). Consequently, the only choice is [msgpack](https://msgpack.org/) and the [aviramha](https://github.com/aviramha/ormsgpack) implementation of it, because (I think) this implementation is more compelete. From more compelete, I mean that (I think) among python implementation, only this one implements the serialization of dataclasses which actually provide the ability to serialize the class member functions and also some powerful inheritance features. For more information about data class go to [real python tutorial](https://realpython.com/python-data-classes/).
+
+In future I will work more on this subject and in future ...
+
+Now let's construct funnywing with __msgpack__!
+
+
+
+#### TODO:
+- [x] Check the RF module profiles with Pixhawk board.
+	Thanks to GOD. It seems that pixhawk has no problem with the setting profile which is used for 9XTend RF module connecting to the RPI/CUAV v5+ pixhawk. So I think we can test it in field.
+
+Let's go ...
 
 
 

@@ -12,7 +12,8 @@ Some Electrical concepts that are good to know:
 - Working Modes of 9XTend Module:
 	- Transparent Operation: [Some good information in this link](https://www.digi.com/resources/documentation/Digidocs/90001942-13/concepts/c_transparent_mode_detailed.htm?tocpath=XBee%20transparent%20mode%7CXBee%20transparent%20mode%20in%20detail%7C_____0) 
 	-  API Operation: [Some good information in this link](https://www.digi.com/resources/documentation/Digidocs/90001942-13/Default.htm#concepts/c_api_mode_detailed.htm?TocPath=API%2520mode%257C_____1)
-
+Air Module MAC address: 0013A200404A9EAB
+Ground Module MAC address: 0013A2FFFFF112CB
 Air Module:
 	Firmware version: 206F
 	SH: 3852
@@ -39,7 +40,10 @@ Another profile for Ground Module:
 	DH: 13A200
 	DL: 404A9EAB
 
-Now let's see how XBee python library can work for us!
+#### Now let's see how XBee python library can work for us!
+I think we can't use the XBee python library, when the module is in transparent operating mode and if we insist on using transparent mode, I think we should use python standard serial module. For more information check [this part of xbee python library documentation](https://xbplib.readthedocs.io/en/latest/user_doc/working_with_xbee_classes.html#device-operating-mode).
+So now, we should check if we can use API operating mode for XTend modules for connecting into pixhawk.
+I've checked the 
 
 I think we can use the rf modules!
 
@@ -112,14 +116,45 @@ There are also some more packages introduced in the article and over the interne
 In future I will work more on this subject and in future ...
 
 Now let's construct funnywing with __msgpack__!
+__Note__: At the moment, I could not install the ormsgpack on RPI, So I've decided to work with the standard/official msgpack and I will try the installation of ormsgpack on RPI later. I think the problem can be bad internet connection. So I will check that!
 
 
 
 #### TODO:
 - [x] Check the RF module profiles with Pixhawk board.
-	Thanks to GOD. It seems that pixhawk has no problem with the setting profile which is used for 9XTend RF module connecting to the RPI/CUAV v5+ pixhawk. So I think we can test it in field.
+	Thanks to GOD! It seems that pixhawk has no problem with the setting profile which is used for 9XTend RF module connecting to the RPI/CUAV v5+ pixhawk(air module). So I think we can use the air module profile for pixhawk too and also for tests which will be performed/conducted in the field.
 
 Let's go ...
+
+
+#### Python new things which I learned:
+- GIL: Global Interpreter Lock, is a mutex or lock which allows only one thread to be executable, even in multithreaded programs. This can be a bottleneck of the program!
+- dataclass: It is like class, but it is intended to be used for data. For more info about it go to realpython tutorial about [dataclasses](https://realpython.com/python-data-classes/).
+
+
+
+## Now I think we should work bese on facts and be reasonable
+There are two problems which I can't spend more time on that:
+- __RF module operating mode__: pixhawk can't work with API mode and on the other hand in transparent mode we can't use the xbee python library. so because I can't spend more time and I want to be agile in developement, I will use the transparent mode and python serial library. In future I will work on learning API mode and XBee python library, so in future ...
+- __Can't install ormsgpack on RPI, so we use msgpack__: I don't know if the problem is because of bad network connection or something else, but I have no more time to spend on that so I wil use official/standard msgpack implementation. In future I will work on learning/installation and work with ormsgpack or implement my own or extend msgpack for things like python dataclass and now just do the work using python msgpack. So in future I will ...
+
+Now Let's do the job with __msgpack__ and RF module __transparent operating mode__. Let's go ...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

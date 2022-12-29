@@ -127,34 +127,17 @@ __Note__: At the moment, I could not install the ormsgpack on RPI, So I've decid
 Let's go ...
 
 
-#### Python new things which I learned:
+#### Python and Software new things which I learned:
 - GIL: Global Interpreter Lock, is a mutex or lock which allows only one thread to be executable, even in multithreaded programs. This can be a bottleneck of the program!
 - dataclass: It is like class, but it is intended to be used for data. For more info about it go to realpython tutorial about [dataclasses](https://realpython.com/python-data-classes/).
-
-
+- Backward compatibility: when a newer version of a system works with older version interfaces of the same system, we call that system backward compatible. for example consider the case of microsoft word 2010 which can read and open older versions back to word 2007. Also 80486 processor can work with programs for 80386, so it is backward compatible.
 
 ## Now I think we should work bese on facts and be reasonable
 There are two problems which I can't spend more time on that:
 - __RF module operating mode__: pixhawk can't work with API mode and on the other hand in transparent mode we can't use the xbee python library. so because I can't spend more time and I want to be agile in developement, I will use the transparent mode and python serial library. In future I will work on learning API mode and XBee python library, so in future ...
 - __Can't install ormsgpack on RPI, so we use msgpack__: I don't know if the problem is because of bad network connection or something else, but I have no more time to spend on that so I wil use official/standard msgpack implementation. In future I will work on learning/installation and work with ormsgpack or implement my own or extend msgpack for things like python dataclass and now just do the work using python msgpack. So in future I will ...
 
-Now Let's do the job with __msgpack__ and RF module __transparent operating mode__. Let's go ...
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Now Let's do the job with ==__official msgpack python implementation__== and ==RF module __transparent operating mode__==. In future ... . Be fast! Let's go ...
+To do this I will provide [[important notes about msgpack python library]] in a seperate node.
+for working with RF module in transparent operating mode, we can use the python standart module `serial`. If there were any important note about this library I will provide it in the [[important notes about python standart serial library]].
 

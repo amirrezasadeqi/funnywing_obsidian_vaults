@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "50a008eae2341d94",
@@ -164,8 +165,9 @@
   },
   "active": "8b4f5e558507cb6c",
   "lastOpenFiles": [
-    "().md",
+    "important notes about msgpack python library.md",
     "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
+    "().md",
     "test.canvas",
     "TTL and RS232.md",
     "2022-12-18.md"

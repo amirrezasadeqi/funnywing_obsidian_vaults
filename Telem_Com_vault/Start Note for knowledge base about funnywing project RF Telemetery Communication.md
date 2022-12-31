@@ -142,3 +142,11 @@ To do this I will provide [[important notes about msgpack python library]] in a 
 for working with RF module in transparent operating mode, we can use the python standart module `serial`. If there were any important note about this library I will provide it in the [[important notes about python standart serial library]].
 
 I moved the vaults to github account!
+
+__Note about commands topic__
+I think we should have one command topic containing the serialized commands. This is because of two resons, as below:
+- firstly, to prevent making the ROS network very crowd and dirty.
+- secondly, if we want add more commands, in this way we don't need to add more topics and message types.
+- thridly, I think in this way the commands will be sent/served sequentially and not in parrallel and in this way we will not be confused by serving the commands in parallel which may cause in complex scenarios(may be!). In future, If we will need sending/creating/serving commands in parallel we would think on that and implement it in a nice way. For now just use this simple method(sequentially send/serve commands) and do the job. In future ...
+
+Now let's do the job ...

@@ -81,10 +81,10 @@ Now, Let's Code using the selected method!
 	- [ ] Client node -> this recives commands from GCS, deserializes the commands, calls corresponding services, serializes the answer and sends it back to GCS
  
 - For GCS PC we should do these:
-	- [ ] Adding seperate page for RF communication in GUI app.
+	- [x] Adding seperate page for RF communication in GUI app.
 	- [X] Add subscription to sensor data and visualize it in GUI app.
 	- [ ] Test the sensor subscription(previous task.)
-	- [ ] Add publisher for sending commands to corresponding topics to the GUI app.
+	- [ ] Add publisher to the GUI app for sending commands to commands topic. 
 	- [ ] Add a Publisher node which recieves data from RF link and publishes to corresponding topics to feed the GUI app.
 	- [ ] Add a subscriber node subscribing to the command topics, serializing them and sending them to RPI. This node should also get the command answers back and provide them to GUI app. This last task may also be done in the previous publisher task(data from RF link), but I'm not confident about it yet, but I think here is better for implementing it, because in this way we gather same contexts together!
 
@@ -150,3 +150,6 @@ I think we should have one command topic containing the serialized commands. Thi
 - thridly, I think in this way the commands will be sent/served sequentially and not in parrallel and in this way we will not be confused by serving the commands in parallel which may cause in complex scenarios(may be!). In future, If we will need sending/creating/serving commands in parallel we would think on that and implement it in a nice way. For now just use this simple method(sequentially send/serve commands) and do the job. In future ...
 
 Now let's do the job ...
+
+### Publish and Subscribe an msgpack encoded/decoded python object in ROS network
+Note that you can't do this using python `str` and in unpacking the encoded data, the deserializer does not accept `str` and wants `bytes-like` object. This fact made it difficult to figure out how we should send such a data or what ros message type is compatible with this data. So after some researchs, [WHOI]() project and specifically [Packet.msg]() solved the problem. Actually we can use [UInt8MultiArray]() standard ROS message for this taks. The documentation about this type of message is so confusing so I searched about how we should set the the fields of such a message, especially the `layout` field.

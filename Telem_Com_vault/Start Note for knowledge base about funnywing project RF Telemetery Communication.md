@@ -84,7 +84,8 @@ Now, Let's Code using the selected method!
 	- [x] Adding seperate page for RF communication in GUI app.
 	- [X] Add subscription to sensor data and visualize it in GUI app.
 	- [ ] Test the sensor subscription(previous task.)
-	- [ ] Add publisher to the GUI app for sending commands to commands topic. 
+	- [x] Add publisher to the GUI app for sending commands to the corresponding topic. 
+	- [ ] Test the pulisher which sends packed navigation commands from GUI app to the corresponding topic for feeding RF link interface node.
 	- [ ] Add a Publisher node which recieves data from RF link and publishes to corresponding topics to feed the GUI app.
 	- [ ] Add a subscriber node subscribing to the command topics, serializing them and sending them to RPI. This node should also get the command answers back and provide them to GUI app. This last task may also be done in the previous publisher task(data from RF link), but I'm not confident about it yet, but I think here is better for implementing it, because in this way we gather same contexts together!
 
@@ -131,6 +132,7 @@ Let's go ...
 - GIL: Global Interpreter Lock, is a mutex or lock which allows only one thread to be executable, even in multithreaded programs. This can be a bottleneck of the program!
 - dataclass: It is like class, but it is intended to be used for data. For more info about it go to realpython tutorial about [dataclasses](https://realpython.com/python-data-classes/).
 - Backward compatibility: when a newer version of a system works with older version interfaces of the same system, we call that system backward compatible. for example consider the case of microsoft word 2010 which can read and open older versions back to word 2007. Also 80486 processor can work with programs for 80386, so it is backward compatible.
+- Simple but nice way to have something like C++ structure in python: To create a template for my commands I need something like structures in C++. note that I could use python class or dataclass, but they are not supported by official msgpack implementation. So I need to use dictionaries. This [stackoverflow question](https://stackoverflow.com/a/19673465/10243689) provides a nice and simple way. we just need to write a function returning the dictionary with our tempelate and name it like a data type. you can also use the [`@staticmethod`](https://www.geeksforgeeks.org/class-method-vs-static-method-python/) decorator in a class for defining these structure creator functions. so we have a simple data structure in python!
 
 ## Now I think we should work bese on facts and be reasonable
 There are two problems which I can't spend more time on that:
@@ -151,5 +153,14 @@ I think we should have one command topic containing the serialized commands. Thi
 
 Now let's do the job ...
 
-### Publish and Subscribe an msgpack encoded/decoded python object in ROS network
-Note that you can't do this using python `str` and in unpacking the encoded data, the deserializer does not accept `str` and wants `bytes-like` object. This fact made it difficult to figure out how we should send such a data or what ros message type is compatible with this data. So after some researchs, [WHOI]() project and specifically [Packet.msg]() solved the problem. Actually we can use [UInt8MultiArray]() standard ROS message for this taks. The documentation about this type of message is so confusing so I searched about how we should set the the fields of such a message, especially the `layout` field.
+### Publish and Subscribe an msgpack-ed encoded/decoded python object in ROS network
+Note that you can't do this using python `str` and in the unpacking of the encoded data, the deserializer does not accept `str` and wants `bytes-like` object. This fact made it difficult to figure out how we should send such a data or what ros message type is compatible with this data. So after some researchs, [WHOI(ros-acomms)](https://git.whoi.edu/acomms/ros_acomms) project and specifically [Packet.msg](https://git.whoi.edu/acomms/ros_acomms/-/blob/master/msg/Packet.msg#L14) solved the problem. Actually we can use [UInt8MultiArray](http://docs.ros.org/en/api/std_msgs/html/msg/UInt8MultiArray.html) standard ROS message for this task. The documentation about this type of message is so confusing, so I searched about how we should set the the fields of such a message, especially the `layout` field. In python(and I think for our simple case of a data buffer) we don't need to set the data field and it is enough to just set the `data` field of the message as it is illustrated in this [stackoverflow question](https://stackoverflow.com/a/31378414/10243689) and this [robot ignition academy discussion session](https://get-help.robotigniteacademy.com/t/publishing-multi-dimensional-array/8895/4). For C++ and more complex data types, like images and so on, I think we also must set the `layout` field. So in the future ...
+
+__NOTE__: I think it is not so good to use UInt8MultiArray for sending general messages(I think specially such a message which can contain anything, because of security things and I think we should add some security layer to compensate this problem), But at the moment I have not any other idea in my head about how to fastly implement publisher/subscriber for the funnywing commands topic(Note that type of commands can evolve or change as time passes). So In the future ...
+
+Now Let's progress the implementation of the funnywing project!
+
+
+
+
+

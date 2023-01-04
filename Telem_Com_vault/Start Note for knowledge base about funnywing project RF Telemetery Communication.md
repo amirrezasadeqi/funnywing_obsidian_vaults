@@ -87,10 +87,15 @@ Now, Let's Code using the selected method!
 	- [x] Add publisher to the GUI app for sending commands to the corresponding topic. 
 	- [ ] Test the pulisher which sends packed navigation commands from GUI app to the corresponding topic for feeding RF link interface node.
 	- [ ] Add a Publisher node which recieves data from RF link and publishes to corresponding topics to feed the GUI app.
-	- [ ] Add a subscriber node subscribing to the command topics, serializing them and sending them to RPI. This node should also get the command answers back and provide them to GUI app. This last task may also be done in the previous publisher task(data from RF link), but I'm not confident about it yet, but I think here is better for implementing it, because in this way we gather same contexts together!
+	- [ ] Add a subscriber node subscribing to the command topics, serializing them and sending them to RPI via RF link. This node should also get the command answers back via RF link and provide them to GUI app. This last task may also be done in the previous publisher task(data from RF link), but I'm not confident about it yet, but I think here is better for implementing it, because in this way we gather same contexts together!
 
+__NOTE__: It may be ok to have seperate nodes with interface to RF module or in another words serial port. But I think at the moment(that I have no time and want to be faster) or even at any other situation, it is better to have something like mavros. I mean having only one interface to the link and all the data transfers being passed through this interface. I think this way have some advantages as below:
+- Thinking about the communication is easier and developement and maintanace would be easier.
+- Prevents wierd behaviors of busy port and threading problems and if there were some errors that would be more managable and easier to solve.
+- so on
+I don't know that the other solution(multiple RF interfaces) how would be, but I think it is not a good one, but anyway I will think about and check it or even implement it in the future and verify its quallity. So in the future ...
+Now let's do the job as fast as possible with one single ROS node as the single or only RF/serial link interface!
 Now let's implement these tasks!
-
 
 ### How the structure of Guidance commands should be?
 In the fourth task for GCS PC, we need to send commands into the RPI via RF link. But how the structure of the sending data should be?
@@ -159,6 +164,132 @@ Note that you can't do this using python `str` and in the unpacking of the encod
 __NOTE__: I think it is not so good to use UInt8MultiArray for sending general messages(I think specially such a message which can contain anything, because of security things and I think we should add some security layer to compensate this problem), But at the moment I have not any other idea in my head about how to fastly implement publisher/subscriber for the funnywing commands topic(Note that type of commands can evolve or change as time passes). So In the future ...
 
 Now Let's progress the implementation of the funnywing project!
+
+I think my serial ports connecting the RF modules to the GCS PC and RPI are [[half-duplex]], so at a specific time, we can only write or only read to/from serial port. In another words, the data flow is uni-directional at any specific time. This [stackoverflow answer](https://stackoverflow.com/a/74182813/10243689) can be helpful in implementing RF module codes.
+
+#### Setting Up the old RF module(4wire air module)
+The wiring that collegues have done was very funny. So I checked it and used my own standard for it by adding some wire extensions as below:
+	Black -> GND
+	Red -> VCC (5v)
+	White -> RXD for air module and TXD for USB to TTL module
+	Gray -> TXD for air module and RXD for USB to TTL module
+Using screen on RPI and GTKTerm on PC I tried to test different settings for ports and finally it worked using `/dev/ttyUSBX 9600-8-N-1`. __Note__ that now I try to implement my codes using this module but the major module (9XTend) may have different behaviors and I hope my code also work on that! but if not this different behavior can be the potential source of issue!
+
+### Some Notes about reading and writing on serial connection(RF link)
+I have tested a simple case in which we run on each of the GCS PC and RPI a node to interface RF module and in each of these nodes we have two threads, one for writing to port and the other for reading from that. The transferring messages were simple greetings(I mean short hello world messages). In this setup I had not any issues about reading and writing from/to serial port at the same time(But there may be in future and I don't know at the moment! we should go forward to see what happens).
+The code for RPI is as bellow:
+```python
+#!/usr/bin/env python3
+
+import rospy
+import serial
+import threading
+import time
+
+
+port = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=1.0)
+
+
+def writer_worker():
+
+    if not port.isOpen():
+        port.open()
+	# port.reset_output_buffer()
+	time.sleep(1.0)
+	port.flush()
+
+    while not rospy.is_shutdown():
+        rospy.loginfo("RPI writer thread writes!")
+        port.write(b"Hello from RPI writer thread!\r\n")
+		# rospy.loginfo("writer log!")
+        time.sleep(0.5)
+
+    return
+
+
+def reader_worker():
+
+    if not port.isOpen():
+        port.open()
+
+	# port.reset_input_buffer()
+	time.sleep(1.0)
+	port.flushInput()
+	
+    while not rospy.is_shutdown():
+        data = port.readline().decode('utf-8')
+        rospy.loginfo(f"RPI reader thread reads: {data}")
+		# time.sleep(0.25)
+		# rospy.loginfo("reader log!")
+		# time.sleep(1.0)
+
+    return
+
+
+if __name__ == "__main__":
+    rospy.init_node("rpi_rf_node")
+    writer_thread = threading.Thread(target=writer_worker)
+    reader_thread = threading.Thread(target=reader_worker)
+
+    writer_thread.start()
+    reader_thread.start()
+
+```
+The code for GCS PC is as below:
+```python
+#!/usr/bin/env python
+
+import rospy
+import serial
+import threading
+import time
+
+
+port = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=1.0)
+
+
+def writer_worker():
+
+    if not port.isOpen():
+        port.open()
+
+    while not rospy.is_shutdown():
+        rospy.loginfo("GCS writer thread writes!")
+        port.write(b"Hello from GCS writer thread!\r\n")
+        time.sleep(0.5)
+
+    return
+
+
+def reader_worker():
+
+    if not port.isOpen():
+        port.open()
+
+    while not rospy.is_shutdown():
+        data = port.readline().decode('utf-8')
+        rospy.loginfo(f"GCS reader thread reads: {data}")
+
+    return
+
+
+if __name__ == "__main__":
+    rospy.init_node("gcs_rf_node")
+    writer_thread = threading.Thread(target=writer_worker)
+    reader_thread = threading.Thread(target=reader_worker)
+
+    writer_thread.start()
+    reader_thread.start()
+
+```
+
+__Note__ that if we don't add the `time.sleep(0.5)` after writing to buffers in `writer_worker`, we would have some wierd behaviors like:
+- Even if we don't send data from GCS, we get some not complete and corrupted greetings by running the node in RPI by `reader_thread`.
+- Also the data transferring is corrupted data, for example I think some messages were incomplete or some characters were missed.
+so this 0.5 seconde sleep is needed after writing to port. Note that I don't tested yet the effect of those `flush` functions and those `reset_<in/out>put_buffer` functions. So this is a TODO:
+- [ ] Check the effect the `flush` and `reset_<in/out>put_buffer` functions!
+
+So by this simple example I think we are ready for implementing the RF link interface node for the funnywing project. __Note__ that these experiments are conducted using the old air module RF telemeteries. So you should also test them with funnywing 9XTend modules.
 
 
 

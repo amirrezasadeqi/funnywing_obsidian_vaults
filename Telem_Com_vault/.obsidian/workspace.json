@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "4dfc153697f0499b",
+        "id": "9aff2fc1f35f3947",
         "type": "tabs",
         "children": [
           {
-            "id": "7a59ae4c287afa53",
+            "id": "633a5d41810e71df",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -85,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Start Note for knowledge base about funnywing project RF Telemetery Communication.md"
-              }
+              "state": {}
             }
           },
           {
@@ -162,12 +154,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7a59ae4c287afa53",
+  "active": "633a5d41810e71df",
   "lastOpenFiles": [
-    "TTL and RS232.md",
+    "Some Notes about reading and writing on serial connection(RF link).md",
     "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
-    "().md",
     "important notes about msgpack python library.md",
+    "TTL and RS232.md",
+    "().md",
     "test.canvas",
     "2022-12-18.md"
   ]

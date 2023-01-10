@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "9aff2fc1f35f3947",
+        "id": "4d3e150290241f5e",
         "type": "tabs",
         "children": [
           {
-            "id": "633a5d41810e71df",
+            "id": "784822fb1b4af748",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Some Notes about reading and writing on serial connection(RF link).md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Some Notes about reading and writing on serial connection(RF link).md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Some Notes about reading and writing on serial connection(RF link).md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Some Notes about reading and writing on serial connection(RF link).md"
+              }
             }
           },
           {
@@ -154,10 +162,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "633a5d41810e71df",
+  "active": "784822fb1b4af748",
   "lastOpenFiles": [
-    "Some Notes about reading and writing on serial connection(RF link).md",
     "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
+    "Some Notes about reading and writing on serial connection(RF link).md",
     "important notes about msgpack python library.md",
     "TTL and RS232.md",
     "().md",

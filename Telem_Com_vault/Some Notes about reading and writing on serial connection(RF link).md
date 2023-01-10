@@ -109,7 +109,7 @@ if __name__ == "__main__":
 __Note__ that if we don't add the `time.sleep(0.5)` after writing to buffers in `writer_worker`, we would have some wierd behaviors like:
 - Even if we don't send data from GCS, we get some not complete and corrupted greetings by running the node in RPI by `reader_thread`.
 - Also the data transferring is corrupted data, for example I think some messages were incomplete or some characters were missed.
-so this 0.5 seconde sleep is needed after writing to port. Note that I don't tested yet the effect of those `flush` functions and those `reset_<in/out>put_buffer` functions. So this is a TODO:
+so this 0.5 seconde sleep is needed after writing to port(If you remember, I think also in 9XTend modules if we set the duration of the loop for sending packets below 0.5 seconds, the corresponding recieved data in the other side was corrupted and wierd!). Note that I don't tested yet the effect of those `flush` functions and those `reset_<in/out>put_buffer` functions. So this is a TODO:
 - [ ] Check the effect the `flush` and `reset_<in/out>put_buffer` functions!
 
 So by this simple example I think we are ready for implementing the RF link interface node for the funnywing project. __Note__ that these experiments are conducted using the old air module RF telemeteries. So you should also test them with funnywing 9XTend modules.

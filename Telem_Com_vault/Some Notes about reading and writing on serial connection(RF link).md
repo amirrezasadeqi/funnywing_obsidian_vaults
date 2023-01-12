@@ -120,6 +120,17 @@ Based on the previouse simple example in which we have two threads writing and r
 So in the future ...
 So now let's go and make our funnywing project!
 
+#### Some notes and observations about serial connection buffer
+I have a weird problem with reading and writing from/to RF link serial ports, specially on RPI side. Consider the flow of the data stream in our scenario to further explain the problem. When the GCS RF modules sends data, the RPI RF module receives that data and because of the firmware running on the module, it resends the data to the USB-TTL converter module. Sequentially, the converter module sends data to the USB port of the raspberry pi(again because of the module firmware). Finally, When the RPI receives the data from its USB port, the linux kernel/drivers put the data to the input buffer of that specific serial port(/dev/ttyUSB0). I think(most likely based on my actual/physical experiments) this flow is running/repeating, even when RPIs does not open the serial port or reads/writes the data using python serial library functions.
+As a result, when we run the RPI code after the GCS, the data can be accumulated on the RPI input buffer for the serial port. So after running on RPI we can get the old data.
+To solve this issue we could use the reset_<input/output>_buffer function of the python serial library, but those functions don't work in a consistent way. I randomly observe situations in which, when I run the RPI node, it logs the data from the input buffer with a fast pace and weirdly the buffer contents don't empty and remain constant(I have tested it using in_Waiting property of python serial library.)
+This can happen because of hardware problems or bad air module and now I have no more time to figure it out. So For now let's do the job as fast as possible but in future ...
+Some useful links about this problem can be as below:
+	- [data flow in setup](https://elinux.org/Serial_port_programming)
+	- [when to flush pyserial buffers](https://stackoverflow.com/questions/52706998/when-to-flush-pyserial-buffers)
+	- [pyserial when should I use flush](https://stackoverflow.com/questions/52706998/when-to-flush-pyserial-buffers)
+	- [pyserial buffer won't flush](https://stackoverflow.com/questions/7266558/pyserial-buffer-wont-flush)
+	- [reset_input_buffer does not appear to successfully clear the buffer](https://github.com/pyserial/pyserial/issues/344)
 
-
+Now Let's do the job as fast as possible!
 

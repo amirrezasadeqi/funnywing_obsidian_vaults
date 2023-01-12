@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Some Notes about reading and writing on serial connection(RF link).md",
+                "file": "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Some Notes about reading and writing on serial connection(RF link).md",
+                "file": "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Some Notes about reading and writing on serial connection(RF link).md",
+                "file": "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Some Notes about reading and writing on serial connection(RF link).md"
+                "file": "Start Note for knowledge base about funnywing project RF Telemetery Communication.md"
               }
             }
           },
@@ -164,10 +164,10 @@
   },
   "active": "784822fb1b4af748",
   "lastOpenFiles": [
+    "TTL and RS232.md",
     "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
     "Some Notes about reading and writing on serial connection(RF link).md",
     "important notes about msgpack python library.md",
-    "TTL and RS232.md",
     "().md",
     "test.canvas",
     "2022-12-18.md"

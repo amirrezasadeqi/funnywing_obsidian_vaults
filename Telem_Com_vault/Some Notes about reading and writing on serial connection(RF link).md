@@ -116,7 +116,7 @@ So by this simple example I think we are ready for implementing the RF link inte
 
 
 ###  Which type are my serial connections? full or half duplex?
-Based on the previouse simple example in which we have two threads writing and reading to/from the serial port we can conclude that our connections are full-duplex, but remember threading does not mean running processes in parallel and actually because of fast processor and fast switiching between processes, it feels that we are running processes in parallel. So there is a probability that the connection is half-duplex and since the switching between threads are so fast and furthermore the TX and RX lines are seperated(which causes the input and output bytes don't mix to each other and create wierd messages.), it seems to us like the full-duplex connection. Anyway, at the moment I have not more time to spend on examining this fact exactly, But in future I will ... and ask from and so on and ...
+Based on the previouse simple example in which we have two threads writing and reading to/from the serial port we can conclude that our connections are full-duplex, but remember threading does not mean running processes in parallel and actually because of fast processor and fast switiching between processes, it feels that we are running processes in parallel. So there is a probability that the connection is half-duplex and since the switching between threads are so fast and furthermore the TX and RX lines are seperated(which causes the input and output bytes don't mix to each other and so don't create wierd messages.), it seems to us like the full-duplex connection. Anyway, at the moment I have not more time to spend on examining this fact exactly, But in future I will ... and ask from and so on and ...
 So in the future ...
 So now let's go and make our funnywing project!
 
@@ -133,4 +133,9 @@ Some useful links about this problem can be as below:
 	- [reset_input_buffer does not appear to successfully clear the buffer](https://github.com/pyserial/pyserial/issues/344)
 
 Now Let's do the job as fast as possible!
+
+__Note__: I have tested the example in this note using the 9XTend modules(in transparent mode) and the buffer problem which I had with the old air module did not happen again(it just happend 1 time in my first tests and did not repeate again. ==If I see this problem again, I will inform you here!==). So this way, I think things will be good and I can continue my work on the funnywing code.
+__Again I observed those unlimited serial input buffers. It happens mostly when you run the RPI code after the GCS code. Now I have no more time to solve this and at the moment compelete the code and after that solve this issue!__
+So Let's go ...
+
 

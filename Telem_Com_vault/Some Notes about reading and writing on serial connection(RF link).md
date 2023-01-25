@@ -138,4 +138,11 @@ __Note__: I have tested the example in this note using the 9XTend modules(in tra
 __Again I observed those unlimited serial input buffers. It happens mostly when you run the RPI code after the GCS code. Now I have no more time to solve this and at the moment compelete the code and after that solve this issue!__
 So Let's go ...
 
-
+### Stop the usage of msgpack at the moment
+I've tried too much to use the msgpack official python implementation for data transmission over the RF modules, but I was not succeful at this task, because data transmits via bytes in transparent mode and the receiver side does not know when a message starts and ends. you can find some useful information on this problem in [stackoverflow answer](https://stackoverflow.com/a/51144344/10243689). Other than this problem which makes it necessary to implement the framing/packetization of messages by my effort, there was another problem. Although I've tried to add '\\n' at the end of the messages to split different messages as a simple framing(I think 9XTend handles many stuffs which causes correct transmission of messages!), the `unpackb` functions could not deserialize the serial data input(most of the times because of uncompelete messages!?==I checked the received data but it was complete!==).
+Anyway, at the moment I can not spend more time to make the msgpack to work with my setup, So I will do this in future, but for now I want to do the job. So I've created a simple example with the `json` module. other than this I thinked about using python xml modules but because I could not find any value in that(because I think the json and xml both will serialize the objects to texts and json is more simpler to use!).
+There is another way which is adding some custom message types to the MAVLink messages for ardupilot, I will test it and finally I will choose one of the below ways and do the job as fast as possible.
+- Using `json` as serialization library and sending data over RF modules.
+- Using MAVLink custom commands based on the ardupilot standard messages.
+I've also found some [python xbee library functions](https://stackoverflow.com/a/20109325/10243689) like [`wait_read_frame`](https://stackoverflow.com/a/13518243/10243689) which can be used in API mode and In future I will test it. So in the future I will ...
+So Let's go and do the job ...

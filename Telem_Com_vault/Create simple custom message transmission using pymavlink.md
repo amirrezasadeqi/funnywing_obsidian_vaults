@@ -1,0 +1,10 @@
+[Getting Started with mavlink](https://mavlink.io/en/getting_started/)
+The workflow should be:
+- Installing mavlink for custom messages. So we can't use `pip` to install `pymavlink` and we should fork from the desired mavlink fork and add custom messages to that. [You can find the proper way of doing this in mavlink documentation.](https://mavlink.io/en/mavgen_python/#generate-a-custom-mavlink-dialect) (I think we should do this in both RPI and GCS system). Note that I have used the [funnywing_mavlink](https://github.com/amirrezasadeqi/funnywing_mavlink) fork which I forked from [ArduPilot/mavlink](https://github.com/ArduPilot/mavlink).
+- Generate the custom messages using [this tutorial](https://mavlink.io/en/getting_started/generate_libraries.html) from mavlink site. Note that for creating your custom messages you should write xml files called ==Dialects==. A good documentation to learn the contents of these files can be found [here](https://mavlink.io/en/guide/define_xml_element.html) and [here](https://mavlink.io/en/guide/xml_schema.html). Furthermore you can include the other dialects into your message set and here we will include the message sets of `ArduPilot` project which can be found in [this link](https://mavlink.io/en/messages/ardupilotmega.html) (`ardupilotmega.xml` file). The list of other dialects can be found [here](https://mavlink.io/en/messages/#dialects). A good example dialect to start writing your dialect is [test.xml](https://github.com/ArduPilot/mavlink/blob/master/message_definitions/v1.0/test.xml).
+- Now you should use the generated codes for your message set in your code. You can find some useful documents for doing this in [here](https://mavlink.io/en/mavgen_python/#using-the-python-mavlink-libraries). Also pymavlink github containes [some good examples of pymavlink usage](https://github.com/ArduPilot/pymavlink/tree/master/examples), like mavtest.py and ... .
+
+Now let's write the first code with pymavlink library! Let's Go ...
+
+Consider adding your custom message mavlink project as a submodule to the funnywing project using [this atlassian tutorial](https://www.atlassian.com/git/tutorials/git-submodule).
+

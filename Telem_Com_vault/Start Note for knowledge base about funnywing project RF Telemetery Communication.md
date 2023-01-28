@@ -180,3 +180,7 @@ Using screen on RPI and GTKTerm on PC I tried to test different settings for por
 [[RF communication kanban board]]
 
 
+
+
+
+

@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "029c54f19a696e96",
+        "id": "7ccf535748db7f4d",
         "type": "tabs",
         "children": [
           {
-            "id": "1508c8acca10cff1",
+            "id": "b13044555b0e4576",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -65,8 +65,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "50a008eae2341d94",
@@ -155,7 +154,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "1508c8acca10cff1",
+  "active": "b13044555b0e4576",
   "lastOpenFiles": [
     "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
     "Do the simple custom message transmission using dronekit.md",

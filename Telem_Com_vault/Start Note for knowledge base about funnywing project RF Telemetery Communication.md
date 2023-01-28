@@ -175,3 +175,8 @@ The wiring that collegues have done was very funny. So I checked it and used my 
 	Gray -> TXD for air module and RXD for USB to TTL module
 Using screen on RPI and GTKTerm on PC I tried to test different settings for ports and finally it worked using `/dev/ttyUSBX 9600-8-N-1`. __Note__ that now I try to implement my codes using this module but the major module (9XTend) may have different behaviors and I hope my code also work on that! but if not this different behavior can be the potential source of issue!
 [[Some Notes about reading and writing on serial connection(RF link)]]
+
+==Let's do the job!==:
+[[RF communication kanban board]]
+
+

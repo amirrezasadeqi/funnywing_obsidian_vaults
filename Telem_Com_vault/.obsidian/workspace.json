@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "2dca19ca8ecf05ec",
+        "id": "68f76128f199ab7d",
         "type": "tabs",
         "children": [
           {
-            "id": "e67d9c4b7475057e",
+            "id": "005ea806102b78aa",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -65,7 +65,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "50a008eae2341d94",
@@ -154,17 +155,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e67d9c4b7475057e",
+  "active": "005ea806102b78aa",
   "lastOpenFiles": [
+    "Add the communication nodes in the new branch of funnywing..md",
     "RF communication kanban board.md",
+    "Convert json and pymavlink codes to test codes for field tests!.md",
     "Start Note for knowledge base about funnywing project RF Telemetery Communication.md",
     "Field test for transmission performance of simple custom messages!.md",
-    "Convert json and pymavlink codes to test codes for field tests!.md",
     "Convert pymavlink, dronekit and MAVSDK codes to test codes for field tests!.md",
     "Do the simple custom message transmission using dronekit.md",
     "Create simple custom message transmission using pymavlink.md",
     "Creating a simple example of send receive using json module for field tests!.md",
-    "Some Notes about reading and writing on serial connection(RF link).md",
-    "Do the simple custom message transmission using MAVSDK.md"
+    "Some Notes about reading and writing on serial connection(RF link).md"
   ]
 }

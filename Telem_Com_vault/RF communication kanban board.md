@@ -11,8 +11,7 @@ kanban-plugin: basic
 
 ## Funnywing RF communication board
 
-- [ ] create a new branch off the RF_communication in the funnywing project and start completing the code of the funnywing project.
-- [ ] Add the communication nodes in the new branch of funnywing.
+- [ ] [[Add the communication nodes in the new branch of funnywing.]]
 
 
 ## Funnywing Project
@@ -31,6 +30,7 @@ kanban-plugin: basic
 - [ ] [[Creating a simple example of send receive using json module for field tests!]]
 - [ ] [[Convert json and pymavlink codes to test codes for field tests!]] ^gh8q3g
 - [x] Creating the commit at funnywing_mavlink project for the new dialect
+- [x] create a new branch off the RF_communication in the funnywing project and start completing the code of the funnywing project.
 
 %% kanban:settings
 ```

@@ -1,0 +1,9 @@
+### Some notes about the thread safety of reading and writing to the `mavlink_connection`
+We've tested this feature by creating two nodes, one in RPI and another in the GCS. In RPI we had 2 writer threads and each thread wrote on the serial port using `<message_name>_send` function. Even after commenting out the sleep coming after the send command, there were no error about multiple access to the serial port and I think this is becase this function are thread safe(If I see any problem about this I will inform you).
+On the GCS node, we have two reader threads reading from the serial port by `recv_match` function. Running this node leads to exception which randomly occurs on one of the threads and says multiple access to the port. Even tested with one thread reading all the incoming datas and the other reading just one type and also each thread reading a different data type, the exception happened. So I can conclude that the reading from the serial port using `recv_match` is not thread safe.
+### How the structure of data transmission can be?
+on the GCS side, I think we can have one thread that just subscribes to the command topic and send them to the vehicle. for getting the responise in gui code or the code that sends the command, we should subscribe the command response topic and using a method like creating a table of sended commands, assign the subscribed responses the commands(maybe with a timeout!).
+Also we have a reader thread which is the only accessor to the port for reading and reads the rf data to a list. on the other hand we have a publisher thread that reads from this input list and publishes messages to the proper topics.
+
+In future I will ...
+let's do the job.
